@@ -9,6 +9,54 @@ describe('updeep', () => {
     expect(result).to.equal(object)
   })
 
+  it('does not change anything if same updates are specified', () => {
+    const object = { foo: 3, bar: [7, 5] }
+    const result = u({ bar: [7, 5] }, object)
+
+    expect(result.foo).to.equal(object.foo)
+    expect(result).to.equal(object)
+    expect(result.bar).to.equal(object.bar)
+  })
+
+  it('does not change anything if same updates are specified in nested array', () => {
+    const object = { foo: 3, bar: [{ x: 0 }, { y: 1 }] }
+    const result = u({ bar: [{ x: 0 }, { y: 1 }] }, object)
+
+    expect(result.foo).to.equal(object.foo)
+    expect(result).to.equal(object)
+    expect(result.bar).to.equal(object.bar)
+  })
+
+  it('does not change anything if same updates are specified in nested array with constant', () => {
+    const object = { foo: 3, bar: [{ x: 0 }, { y: 1 }] }
+    const result = u({ bar: u.constant([{ x: 0 }, { y: 1 }]) }, object)
+
+    expect(result.foo).to.equal(object.foo)
+    expect(result).to.equal(object)
+    expect(result.bar).to.equal(object.bar)
+  })
+
+  it('updates an array with nested changes', () => {
+    const object = { foo: 3, bar: [{ x: 0 }, { y: 1, z: 0 }] }
+    const result = u({ bar: [{ x: 0 }, { y: 2 }] }, object)
+
+    expect(result.foo).to.equal(object.foo)
+    expect(result).to.not.equal(object)
+    expect(result.bar).to.not.equal(object.bar)
+    expect(result.bar[0]).to.equal(object.bar[0])
+    expect(result.bar).to.deep.equal([{ x: 0 }, { y: 2, z: 0 }])
+  })
+
+  it('can update an array', () => {
+    const object = { foo: 3, bar: [7, 5] }
+    const result = u({ bar: [7, 4, 5] }, object)
+
+    expect(result.foo).to.equal(object.foo)
+    expect(result).to.not.equal(object)
+    expect(result.bar).to.not.equal(object.bar)
+    expect(result.bar).to.deep.equal([7, 4, 5])
+  })
+
   it('can update with fixed values', () => {
     const object = { foo: 3, bar: [7, 5] }
     const result = u({ foo: 4 }, object)

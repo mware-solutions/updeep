@@ -1,6 +1,6 @@
 {
-  "name": "updeep",
-  "version": "1.0.0",
+  "name": "@visallo/updeep",
+  "version": "1.0.1",
   "description": "Easily update nested frozen objects and arrays in a declarative and immutable manner.",
   "homepage": "https://github.com/substantial/updeep",
   "repository": {
