@@ -27,6 +27,15 @@ describe('updeep', () => {
     expect(result.bar).to.equal(object.bar)
   })
 
+  it('does not change anything if same updates are specified in nested array with constant', () => {
+    const object = { foo: 3, bar: [{ x: 0 }, { y: 1 }] }
+    const result = u({ bar: u.constant([{ x: 0 }, { y: 1 }]) }, object)
+
+    expect(result.foo).to.equal(object.foo)
+    expect(result).to.equal(object)
+    expect(result.bar).to.equal(object.bar)
+  })
+
   it('updates an array with nested changes', () => {
     const object = { foo: 3, bar: [{ x: 0 }, { y: 1, z: 0 }] }
     const result = u({ bar: [{ x: 0 }, { y: 2 }] }, object)
