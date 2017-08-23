@@ -12,7 +12,7 @@ describe('updeep', () => {
   it('does not change anything if same updates are specified', () => {
     const object = { foo: 3, bar: [7, 5] }
     const result = u({ bar: [7, 5] }, object)
-    
+
     expect(result.foo).to.equal(object.foo)
     expect(result).to.equal(object)
     expect(result.bar).to.equal(object.bar)
@@ -38,7 +38,7 @@ describe('updeep', () => {
     expect(result.bar).to.deep.equal([{ x: 0 }, { y: 2, z: 0 }])
   })
 
-  it('can updat an array', () => {
+  it('can update an array', () => {
     const object = { foo: 3, bar: [7, 5] }
     const result = u({ bar: [7, 4, 5] }, object)
 
